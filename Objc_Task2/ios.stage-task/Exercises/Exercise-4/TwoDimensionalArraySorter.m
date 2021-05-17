@@ -5,8 +5,8 @@
 - (NSArray *)twoDimensionalSort:(NSArray<NSArray *> *)array {
     
     NSMutableArray *arrayCopy = [NSMutableArray array];
-    NSMutableArray *nArray = [NSMutableArray array];
-    NSMutableArray *sArray = [NSMutableArray array];
+    NSMutableArray *numArray = [NSMutableArray array];
+    NSMutableArray *strArray = [NSMutableArray array];
     
     
     if (![array[0] isKindOfClass:[NSArray class]]) {
@@ -19,28 +19,28 @@
             [arrayCopy addObject: array[i][j]];
             
             if ([array[i][j] isKindOfClass:[NSNumber class]]) {
-                [nArray addObject: array[i][j]];
+                [numArray addObject: array[i][j]];
             }
             
             else if ([array[i][j] isKindOfClass:[NSString class]]) {
-                [sArray addObject: array[i][j]];
+                [strArray addObject: array[i][j]];
             }
         }
     }
-    [nArray sortUsingSelector:@selector(compare:)];
-    [sArray sortUsingSelector:@selector(compare:)];
+    [numArray sortUsingSelector:@selector(compare:)];
+    [strArray sortUsingSelector:@selector(compare:)];
     
-    if (nArray.count != 0) {
-        if (sArray.count != 0) {
-            
-            [nArray addObjectsFromArray: sArray];
-            return nArray;
+    if (numArray.count != 0) {
+        if (strArray.count != 0) {
+            NSMutableArray *numStrArray = [NSMutableArray array];
+            numStrArray[0] = numArray;
+            numStrArray[1] = [[strArray reverseObjectEnumerator] allObjects];
+            return numStrArray;
         }
-        return nArray;
+        return numArray;
     }
-    
-    if (sArray.count != 0) {
-        return sArray;
+    else if (strArray.count != 0) {
+        return strArray;
     }
     return @[];
 }
